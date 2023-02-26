@@ -2,10 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
 body {
   max-height: 100svh;
   overflow: hidden;
+  top: 0;
+}
+
+*::-webkit-scrollbar {
+  display: none;
 }
 
 .twitter-picker {
