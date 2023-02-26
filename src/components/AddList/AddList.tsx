@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react'
 import { TwitterPicker  } from 'react-color';
-import { Plus } from 'react-feather';
+import { Plus, ChevronDown, X } from 'react-feather';
 
 
 type AddListProps = {
@@ -30,7 +30,7 @@ function AddList({ onSubmit }: AddListProps) {
             </div>
 
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="relative z-10" onClose={() => undefined}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -54,27 +54,29 @@ function AddList({ onSubmit }: AddListProps) {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="fixed bottom-0 w-full max-w-md transform overflow-visible rounded-t-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                    <X className='absolute right-6' onClick={closeModal} />
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-medium leading-6 mb-4"
+                      className="text-lg font-medium leading-6 mb-8"
                     >
                       Create List 📃
                     </Dialog.Title>
                     <div className="mt-2">
+                      {colourPickerVisible && <TwitterPicker triangle='hide' color={listColour} className='bottom-[8rem] z-20' onChange={(color:{hex:string}) => {setListColour(color.hex); setColourPickerVisible(false)}} />}
                       <div className='flex items-center gap-2 h-10 cursor-pointer'>
-                          <div className='bg-slate-100 h-full w-10 rounded-md flex justify-center items-center' onClick={() => setColourPickerVisible(prev => !prev)}>
+                          <div className='bg-slate-100 h-full w-20 rounded-md flex justify-evenly items-center' onClick={() => setColourPickerVisible(prev => !prev)}>
                               <div className='w-4 h-4 rounded' style={{backgroundColor: listColour}}></div>
+                              <ChevronDown className={`stroke-2 w-4 transition ${colourPickerVisible ? 'rotate-180' : ''}`} />
                           </div>
-                          <input type="text" id="newTaskName" placeholder="List name" className='bg-slate-100 px-4 py-2 rounded-md'></input>
+                          <input type="text" id="newTaskName" placeholder="List name" className='bg-slate-100 px-4 py-2 rounded-md w-full'></input>
                       </div>
-                      {colourPickerVisible && <TwitterPicker className='mt-4' color={listColour} onChangeComplete={(color:{hex:string}) => setListColour(color.hex)} />}
                     </div>
 
                     <div className="mt-4">
                     <button
                       type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+                      className="inline-flex w-full justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
                       onClick={() => {
                         closeModal();
                         const newTaskNameElement = document.getElementById('newTaskName') as HTMLInputElement;
