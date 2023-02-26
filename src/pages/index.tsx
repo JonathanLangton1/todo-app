@@ -1,9 +1,9 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
+// import Link from "next/link";
 import ListSummary from "~/components/ListSummary/ListSummary";
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import AddList from "~/components/AddList/AddList";
 
 
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
     return id;
   }
 
-  const addList = (listName, themeColour) => {
+  const addList = (listName:string, themeColour:string) => {
     setLists(prev => [...prev, {'id': generateUniqueListId(), 'listName': listName, 'themeColour': themeColour, 'tasks': []}])
   }
 
