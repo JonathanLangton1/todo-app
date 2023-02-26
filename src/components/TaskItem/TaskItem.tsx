@@ -25,7 +25,7 @@ function TaskItem({ id, taskName, themeColour, isComplete }: TaskItemProps) {
     <div className={`${isChecked ? 'opacity-50': ''} transition flex bg-white p-3 rounded-lg gap-2 items-center`}>
       <Checkbox isChecked={isChecked} onChange={onCheckboxChange} id={id} />
       <p className={`${isChecked ? 'line-through': ''} font-medium`}>{taskName}</p>
-      <div className={`w-[0.75rem] h-[0.75rem] rounded ml-auto bg-[${themeColour}]`}></div>
+      <div className={`w-[0.75rem] h-[0.75rem] rounded ml-auto`} style={{ backgroundColor: themeColour}}></div>
     </div>
   );
 }

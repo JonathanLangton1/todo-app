@@ -12,8 +12,14 @@ import TaskItem from "~/components/TaskItem/TaskItem";
 
 const Home: NextPage = () => {
 
-  const [lists, setLists] = useState([{'id': 0, 'listName': 'Work', 'themeColour': 'pink'}])
-  const [tasks, setTasks] = useState([{'id': 0, 'parentListId': 0, 'taskName': 'Test task', 'dueDate': undefined, 'priority': undefined, 'taskNote': '', 'isComplete': false }, {'id': 1, 'parentListId': 0, 'taskName': 'Test task', 'dueDate': undefined, 'priority': undefined, 'taskNote': '', 'isComplete': true }])
+  const [lists, setLists] = useState([{'id': 0, 'listName': 'Work', 'themeColour': 'pink'}, {'id': 1, 'listName': 'Personal', 'themeColour': 'lightblue'}])
+  const [tasks, setTasks] = useState([
+    {'id': 0, 'parentListId': 0, 'taskName': 'Test task', 'dueDate': new Date().toISOString(), 'priority': undefined, 'taskNote': '', 'isComplete': false },
+    {'id': 1, 'parentListId': 1, 'taskName': 'Test task 2', 'dueDate': new Date().toISOString(), 'priority': undefined, 'taskNote': '', 'isComplete': false },
+    {'id': 2, 'parentListId': 0, 'taskName': 'Test task 3', 'dueDate': new Date(Date.now() - 86400000).toISOString(), 'priority': undefined, 'taskNote': '', 'isComplete': true },
+    {'id': 3, 'parentListId': 0, 'taskName': 'Test task 4', 'dueDate': new Date(Date.now() - 86400000).toISOString(), 'priority': undefined, 'taskNote': '', 'isComplete': true },
+    {'id': 4, 'parentListId': 1, 'taskName': 'Test task 5', 'dueDate': new Date(Date.now() - 86400000).toISOString(), 'priority': undefined, 'taskNote': '', 'isComplete': true },
+  ])
 
   const generateUniqueListId = () => {
     let id = 0;
@@ -27,11 +33,12 @@ const Home: NextPage = () => {
   }
 
   const getParentListFromId = (id: number) => {
-    return lists.filter(list => list.id === id)
+    const result = lists.find(list => list.id === id);
+    return result || null;
   }
 
   const getTasksFromListId = (id: number) => {
-    return tasks.filter(task => task.id === id)
+    return tasks.filter(task => task.parentListId === id)
   }
 
   const addList = (listName:string, themeColour:string) => {
@@ -62,24 +69,26 @@ const Home: NextPage = () => {
             <h3 className="text-xs font-medium py-2 sticky top-0 bg-slate-100 z-[2]">Today</h3>
             <div className="flex flex-col gap-2">
               {tasks.map(task => {
-                const parentList: { id: number; listName: string; themeColour: string; }[] = getParentListFromId(task.parentListId) || [];
-                const themeColour = parentList.length > 0 ? parentList[0].themeColour : '';
-                return (<TaskItem key={task.id} id={task.id} taskName={task.taskName} themeColour={themeColour} isComplete={task.isComplete} />)
+                if (task.dueDate.slice(0, -14) == new Date().toISOString().slice(0, -14)) {
+                  const parentList = getParentListFromId(task.parentListId);
+                  const themeColour = parentList ? parentList.themeColour : '';
+                  console.log(themeColour)
+                  return (<TaskItem key={task.id} id={task.id} taskName={task.taskName} themeColour={themeColour} isComplete={task.isComplete} />)
+                }
               })}
-
             </div>
 
 
 
             <h3 className="text-xs font-medium py-2 sticky top-0 bg-slate-100 z-[2]">Yesterday</h3>
             <div className="flex flex-col gap-2">
-
-              {tasks.map(task => {
-                const parentList: { id: number; listName: string; themeColour: string; }[] = getParentListFromId(task.parentListId) || [];
-                const themeColour = parentList.length > 0 ? parentList[0].themeColour : '';
-                return (<TaskItem key={task.id} id={task.id} taskName={task.taskName} themeColour={themeColour} isComplete={task.isComplete} />)
+            {tasks.map(task => {
+                if (task.dueDate.slice(0, -14) == new Date(Date.now() - 86400000).toISOString().slice(0, -14)) {
+                  const parentList = getParentListFromId(task.parentListId);
+                  const themeColour = parentList ? parentList.themeColour : '';
+                  return (<TaskItem key={task.id} id={task.id} taskName={task.taskName} themeColour={themeColour} isComplete={task.isComplete} />)
+                }
               })}
-
           </div>
 
 
