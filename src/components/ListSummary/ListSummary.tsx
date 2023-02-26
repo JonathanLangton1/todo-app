@@ -1,3 +1,6 @@
+import { ArrowRight } from 'react-feather'
+
+
 function ListSummary({ listName='', noOfTask=0, themeColour='#EC4899' }) {
     return ( 
         <>
@@ -8,7 +11,7 @@ function ListSummary({ listName='', noOfTask=0, themeColour='#EC4899' }) {
                 </div>
                 <div className="flex justify-between">
                   <p className="font-medium whitespace-nowrap">{`${noOfTask} ${noOfTask === 1 ? 'Task' : 'Tasks'}`}</p>
-                  <i data-feather="arrow-right" className="min-w-[1.5rem] group-hover:translate-x-1 transition"></i>
+                  <ArrowRight className="min-w-[1.5rem] group-hover:translate-x-1 transition" />
                 </div>
             </div>
         </>

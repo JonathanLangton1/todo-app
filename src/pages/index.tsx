@@ -34,8 +34,6 @@ const Home: NextPage = () => {
         <title>Todo App | Jonathan</title>
         <meta name="description" content="A simple todo app created using NextJS" />
         <link rel="icon" href="/favicon.ico" />
-        <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js" defer></script>
-        <script defer>feather.replace()</script>
       </Head>
       <main className="flex min-h-screen flex-col bg-slate-100 p-8 text-g text-slate-700">
         <h1 className="text-3xl font-medium mb-16" onClick={generateUniqueListId}>Your Todos</h1>

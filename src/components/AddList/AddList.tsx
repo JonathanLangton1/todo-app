@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react'
 import { TwitterPicker  } from 'react-color';
+import { Plus } from 'react-feather';
 
 
 type AddListProps = {
@@ -25,7 +26,7 @@ function AddList({ onSubmit }: AddListProps) {
     return ( 
         <>
             <div onClick={openModal} className="cursor-pointer hover:border-slate-300 transition flex min-w-[8rem] h-20 rounded-xl border-2 border-dashed justify-center items-center">
-                <i data-feather="plus"></i>
+                <Plus />
             </div>
 
       <Transition appear show={isOpen} as={Fragment}>
