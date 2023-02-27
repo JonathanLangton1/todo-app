@@ -5,8 +5,8 @@ import ListSummary from "~/components/ListSummary/ListSummary";
 import * as React from 'react';
 import { useState } from 'react';
 import AddList from "~/components/AddList/AddList";
-import Checkbox from "~/components/Checkbox/Checkbox";
 import TaskItem from "~/components/TaskItem/TaskItem";
+import { Plus } from "react-feather";
 
 
 
@@ -104,10 +104,12 @@ const Home: NextPage = () => {
               })}
           </div>
 
-
-
           </div>
         </section>
+
+        <div className="z-10 border fixed right-8 bottom-8 rounded-full p-4 bg-black/80 backdrop-blur-sm">
+          <Plus className="text-white" />
+        </div>
 
       </main>
     </>
