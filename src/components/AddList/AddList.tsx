@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, Fragment } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react'
 import { TwitterPicker  } from 'react-color';
 import { Plus, ChevronDown, X } from 'react-feather';
@@ -14,14 +14,21 @@ function AddList({ onSubmit }: AddListProps) {
     const [listColour, setListColour] = useState('#000000')
     const [colourPickerVisible, setColourPickerVisible] = useState(false)
 
+    const toggleColourPicker = (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      setColourPickerVisible(prev => !prev)
+      // Prevent keyboard from going, causing janky UX
+      document.getElementById('newTaskName')?.focus()
+    }
 
     function closeModal() {
         setIsOpen(false)
+        setColourPickerVisible(false)
       }
     
-      function openModal() {
-        setIsOpen(true)
-      }
+    function openModal() {
+      setIsOpen(true)
+    }
 
     return ( 
         <>
@@ -65,9 +72,9 @@ function AddList({ onSubmit }: AddListProps) {
                           Create List 📃
                         </Dialog.Title>
                         <div className="mt-2">
-                          {colourPickerVisible && <TwitterPicker triangle='hide' color={listColour} className='bottom-[8rem] z-20' onChange={(color:{hex:string}) => {setListColour(color.hex); setColourPickerVisible(false)}} />}
+                          {colourPickerVisible && <TwitterPicker triangle='hide' color={listColour} className='bottom-[8rem] z-20' onChange={(color:{hex:string}) => {setListColour(color.hex); setColourPickerVisible(false); document.getElementById('newTaskName')?.focus()}} />}
                           <div className='flex items-center gap-2 h-10 cursor-pointer'>
-                              <div className='bg-slate-100 h-full w-20 rounded-md flex justify-evenly items-center' onClick={() => setColourPickerVisible(prev => !prev)}>
+                              <div className='bg-slate-100 h-full w-20 rounded-md flex justify-evenly items-center' onClick={toggleColourPicker}>
                                   <div className='w-4 h-4 rounded' style={{backgroundColor: listColour}}></div>
                                   <ChevronDown className={`stroke-2 w-4 transition ${colourPickerVisible ? 'rotate-180' : ''}`} />
                               </div>

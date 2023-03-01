@@ -66,8 +66,8 @@ const Home: NextPage = () => {
         <meta name="description" content="A simple todo app created using NextJS" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex min-h-screen flex-col bg-slate-100 p-8 text-g text-slate-700">
-        <h1 className="text-3xl font-medium mb-16" onClick={generateUniqueListId}>Your Todos</h1>
+      <main className="flex min-h-[100svh] flex-col bg-slate-100 p-8 pb-0 text-g text-slate-700">
+        <h1 className="text-3xl font-medium pb-16" onClick={generateUniqueListId}>Your Todos</h1>
 
         <section className="mb-2">
           <h2 className="text-xs font-medium mb-2">Your lists</h2>
@@ -85,7 +85,6 @@ const Home: NextPage = () => {
                 if (task.dueDate.slice(0, -14) == new Date().toISOString().slice(0, -14)) {
                   const parentList = getParentListFromId(task.parentListId);
                   const themeColour = parentList ? parentList.themeColour : '';
-                  console.log(themeColour)
                   return (<TaskItem key={task.id} id={task.id} taskName={task.taskName} themeColour={themeColour} isComplete={task.isComplete} />)
                 }
               })}
