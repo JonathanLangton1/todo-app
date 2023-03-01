@@ -3,15 +3,15 @@ import * as React from 'react';
 import { useState, Fragment } from 'react';
 import { Listbox, Transition } from "@headlessui/react";
 
-function AddTask({ listNames }) {
+function AddTask({ listNames, isOpen, onClose }) {
 
     const [listSelected, setListSelected] = useState(listNames[0])
 
     return ( 
-        <div className="fixed w-full h-full bg-white z-30 top-0 left-0 p-8">
+        <div className={`fixed w-full h-full bg-white z-30 top-0 left-0 p-8 ${isOpen ? '' : 'hidden'}`}>
 
             <div className="flex justify-between pb-8">
-                <ArrowLeft />
+                <ArrowLeft onClick={() => onClose(false)} />
                 <button className="text-blue-500">Save</button>
             </div>
 
@@ -70,10 +70,10 @@ function AddTask({ listNames }) {
                     </div>
                 </Listbox>
 
-
+{/* 
               <label htmlFor="dueDate">Due By</label><br></br>
               <input type="date" id="dueDate" name="dueDate" />
-              <button type="submit">Submit</button>
+              <button type="submit">Submit</button> */}
             </form>
 
         </div>

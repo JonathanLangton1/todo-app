@@ -35,6 +35,8 @@ const Home: NextPage = () => {
     {'id': 17, 'parentListId': 1, 'taskName': 'Test task 5', 'dueDate': new Date(Date.now() - 86400000).toISOString(), 'priority': undefined, 'taskNote': '', 'isComplete': true },
   ])
 
+  const [newTaskMenuOpen, setNewTaskMenuOpen] = useState(false)
+
   const generateUniqueListId = () => {
     let id = 0;
     lists.forEach(list => {
@@ -107,11 +109,11 @@ const Home: NextPage = () => {
           </div>
         </section>
 
-        <div className="z-10 border fixed right-8 bottom-8 rounded-full p-4 bg-black/80 backdrop-blur-sm">
+        <div className="z-10 border fixed right-8 bottom-8 rounded-full p-4 bg-black/80 backdrop-blur-sm" onClick={() => setNewTaskMenuOpen(prev => !prev)}>
           <Plus className="text-white transition" />
         </div>
         
-        <AddTask listNames={lists} />
+        <AddTask listNames={lists} isOpen={newTaskMenuOpen} onClose={setNewTaskMenuOpen} />
 
       </main>
     </>
