@@ -7,6 +7,7 @@ import { useState } from 'react';
 import AddList from "~/components/AddList/AddList";
 import TaskItem from "~/components/TaskItem/TaskItem";
 import { Plus } from "react-feather";
+import AddTask from "~/components/AddTask/AddTask";
 
 
 
@@ -107,8 +108,10 @@ const Home: NextPage = () => {
         </section>
 
         <div className="z-10 border fixed right-8 bottom-8 rounded-full p-4 bg-black/80 backdrop-blur-sm">
-          <Plus className="text-white" />
+          <Plus className="text-white transition" />
         </div>
+        
+        <AddTask listNames={lists} />
 
       </main>
     </>
