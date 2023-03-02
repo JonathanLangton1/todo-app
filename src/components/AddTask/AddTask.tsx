@@ -23,18 +23,18 @@ const AddTask = ({ listNames, isOpen, onClose }: AddTaskProps) => {
         <div className={`fixed w-full h-full bg-white z-30 top-0 left-0 p-8 ${isOpen ? '' : 'hidden'}`}>
 
             <div className="flex justify-between pb-8">
-                <ArrowLeft onClick={() => onClose(false)} />
-                <button className="text-blue-500">Save</button>
+                <ArrowLeft onClick={() => onClose(false)} className="cursor-pointer transition hover:opacity-70" />
+                <button className="text-blue-500 transition hover:opacity-70">Save</button>
             </div>
 
             <form action="/send-data-here" method="post">
-                <input type="text" id="name" name="name" className="py-2 text-2xl rounded-md w-full" placeholder="Task name..." />
+                <input type="text" id="name" name="name" className="py-2 text-2xl rounded-md w-full transition focus:outline-none focus:placeholder-transparent" placeholder="Task name..." />
 
                 {listSelected ? (
                   <Listbox value={listSelected} onChange={setListSelected}>
                       <div className="relative mt-1">
-                        <Listbox.Button className="relative flex gap-2 items-center cursor-default rounded-full bg-slate-100 py-1 px-4 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 text-sm">
-                          <div className="w-4 h-4 rounded bg-black"></div>
+                        <Listbox.Button className="relative flex gap-2 items-center cursor-pointer rounded-full transition hover:bg-slate-200 bg-slate-100 py-1 px-4 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 text-sm">
+                          <div className="w-4 h-4 rounded bg-black" style={{backgroundColor: listSelected.themeColour}}></div>
                           <p className="block truncate pr-6">{listSelected.listName}</p>
                           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
                             <Code
@@ -54,7 +54,7 @@ const AddTask = ({ listNames, isOpen, onClose }: AddTaskProps) => {
                               <Listbox.Option
                                 key={listIdx}
                                 className={({ active }) =>
-                                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                  `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
                                     active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
                                   }`
                                 }

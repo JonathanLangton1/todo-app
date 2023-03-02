@@ -109,7 +109,7 @@ const Home: NextPage = () => {
           </div>
         </section>
 
-        <div className="z-10 border fixed right-8 bottom-8 rounded-full p-4 bg-black/80 backdrop-blur-sm" onClick={() => setNewTaskMenuOpen(prev => !prev)}>
+        <div className="z-10 border fixed right-8 bottom-8 rounded-full p-4 transition cursor-pointer hover:bg-black/90 bg-black/80 backdrop-blur-sm" onClick={() => setNewTaskMenuOpen(prev => !prev)}>
           <Plus className="text-white transition" />
         </div>
         
