@@ -61,6 +61,9 @@ const Home: NextPage = () => {
     setLists(prev => [...prev, {'id': generateUniqueListId(), 'listName': listName, 'themeColour': themeColour}])
   }
 
+  const deleteTask = (id: number) => {
+    setTasks(tasks => tasks.filter(task => task.id != id))
+  }
 
   return (
     <>
@@ -88,7 +91,7 @@ const Home: NextPage = () => {
                 if (task.dueDate.slice(0, -14) == new Date().toISOString().slice(0, -14)) {
                   const parentList = getParentListFromId(task.parentListId);
                   const themeColour = parentList ? parentList.themeColour : '';
-                  return (<TaskItem key={task.id} id={task.id} taskName={task.taskName} themeColour={themeColour} isComplete={task.isComplete} />)
+                  return (<TaskItem key={task.id} id={task.id} taskName={task.taskName} themeColour={themeColour} isComplete={task.isComplete} onDelete={deleteTask} />)
                 }
               })}
             </div>
