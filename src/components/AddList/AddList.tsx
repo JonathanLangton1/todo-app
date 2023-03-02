@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect, Fragment } from 'react';
+import { useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react'
 import { TwitterPicker  } from 'react-color';
 import { Plus, ChevronDown, X } from 'react-feather';
