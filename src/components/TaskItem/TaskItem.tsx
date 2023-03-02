@@ -14,7 +14,6 @@ interface TaskItemProps {
 
 function TaskItem({ id, taskName, themeColour, isComplete, onDelete }: TaskItemProps) {
   const [isChecked, setIsChecked] = useState(isComplete);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
   const [checkSound] = useSound('assets/check.wav', {volume: 0.5});
   const [unCheckSound] = useSound('assets/uncheck.wav', {volume: 0.5});
@@ -22,16 +21,17 @@ function TaskItem({ id, taskName, themeColour, isComplete, onDelete }: TaskItemP
 
 
   // Detect left swipe
-  const [touchStart, setTouchStart] = useState(null)
-  const [touchEnd, setTouchEnd] = useState(null)
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const minSwipeDistance = 50 
-  const onTouchStart = (e) => {
-    setTouchEnd(null) // otherwise the swipe is fired even with usual touch events
-    setTouchStart(e.targetTouches[0].clientX)
-  }
-  const onTouchMove = (e) => setTouchEnd(e.targetTouches[0].clientX)
+  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    setTouchEnd(null); // otherwise the swipe is fired even with usual touch events
+    setTouchStart(e.targetTouches[0] ? e.targetTouches[0].clientX : null);
+  };
+  
+  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => setTouchEnd(e.targetTouches[0] ? e.targetTouches[0].clientX : null)
 
-  const onTouchEnd = (e) => {
+  const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return
     const distance = touchStart - touchEnd
     const isLeftSwipe = distance > minSwipeDistance

@@ -7,6 +7,7 @@ interface AddTaskProps {
   listNames: ListItem[];
   isOpen: boolean;
   onClose: (bool:boolean) => void;
+  onSubmit: (parentListId:number, taskName:string, dueDate:Date, priority:number, taskNote:string) => void;
 }
 
 interface ListItem {
@@ -16,19 +17,33 @@ interface ListItem {
 }
 
 
-const AddTask = ({ listNames, isOpen, onClose }: AddTaskProps) => {
+const AddTask = ({ listNames, isOpen, onClose, onSubmit }: AddTaskProps) => {
   const [listSelected, setListSelected] = useState<ListItem | undefined>(listNames[0]);
+
+  const submit = () => {
+    const taskName = (document.getElementById('newTaskName') as HTMLInputElement).value;
+    // Create new task
+    onSubmit(listSelected ? listSelected.id : 0, taskName, new Date, 0, 'Bruh')
+    // Close new task view
+    onClose(false)
+    // Reset task name field
+    const taskNameInput = document.getElementById('newTaskName') as HTMLInputElement | null;
+    if (taskNameInput) {
+      taskNameInput.value = '';
+    }
+  }
+
 
     return ( 
         <div className={`fixed w-full h-full bg-white z-30 top-0 left-0 p-8 ${isOpen ? '' : 'hidden'}`}>
 
             <div className="flex justify-between pb-8">
                 <ArrowLeft onClick={() => onClose(false)} className="cursor-pointer transition hover:opacity-70" />
-                <button className="text-blue-500 transition hover:opacity-70">Save</button>
+                <button className="text-blue-500 transition hover:opacity-70" onClick={submit}>Save</button>
             </div>
 
             <form action="/send-data-here" method="post">
-                <input type="text" id="name" name="name" className="py-2 text-2xl rounded-md w-full transition focus:outline-none focus:placeholder-transparent" placeholder="Task name..." />
+                <input type="text" id="newTaskName" name="name" className="py-2 text-2xl rounded-md w-full transition focus:outline-none focus:placeholder-transparent" placeholder="Task name..." />
 
                 {listSelected ? (
                   <Listbox value={listSelected} onChange={setListSelected}>

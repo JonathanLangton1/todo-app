@@ -48,6 +48,17 @@ const Home: NextPage = () => {
     return id;
   }
 
+  const generateUniqueTaskId = () => {
+    let id = 0;
+    tasks.forEach(task => {
+      if (task.id > id) {
+        id = task.id
+      }
+    })
+    id++
+    return id;
+  }
+
   const getParentListFromId = (id: number) => {
     const result = lists.find(list => list.id === id);
     return result || null;
@@ -59,6 +70,10 @@ const Home: NextPage = () => {
 
   const addList = (listName:string, themeColour:string) => {
     setLists(prev => [...prev, {'id': generateUniqueListId(), 'listName': listName, 'themeColour': themeColour}])
+  }
+
+  const addTask = (parentListId:number, taskName:string, dueDate:Date, priority:number, taskNote:string) => {
+    setTasks(prev => [...prev, {'id': generateUniqueTaskId(), 'parentListId': parentListId, 'taskName': taskName, 'dueDate': new Date().toISOString(), 'priority': undefined, 'taskNote': '', 'isComplete': false }])
   }
 
   const deleteTask = (id: number) => {
@@ -104,7 +119,7 @@ const Home: NextPage = () => {
                 if (task.dueDate.slice(0, -14) == new Date(Date.now() - 86400000).toISOString().slice(0, -14)) {
                   const parentList = getParentListFromId(task.parentListId);
                   const themeColour = parentList ? parentList.themeColour : '';
-                  return (<TaskItem key={task.id} id={task.id} taskName={task.taskName} themeColour={themeColour} isComplete={task.isComplete} />)
+                  return (<TaskItem key={task.id} id={task.id} taskName={task.taskName} themeColour={themeColour} isComplete={task.isComplete} onDelete={deleteTask} />)
                 }
               })}
           </div>
@@ -116,7 +131,7 @@ const Home: NextPage = () => {
           <Plus className="text-white transition" />
         </div>
         
-        <AddTask listNames={lists} isOpen={newTaskMenuOpen} onClose={setNewTaskMenuOpen} />
+        <AddTask listNames={lists} isOpen={newTaskMenuOpen} onClose={setNewTaskMenuOpen} onSubmit={addTask} />
 
       </main>
     </>

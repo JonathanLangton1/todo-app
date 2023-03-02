@@ -18,7 +18,7 @@ function AddList({ onSubmit }: AddListProps) {
       e.preventDefault();
       setColourPickerVisible(prev => !prev)
       // Prevent keyboard from going, causing janky UX
-      document.getElementById('newTaskName')?.focus()
+      document.getElementById('newListName')?.focus()
     }
 
     function closeModal() {
@@ -72,13 +72,13 @@ function AddList({ onSubmit }: AddListProps) {
                           Create List 📃
                         </Dialog.Title>
                         <div className="mt-2">
-                          {colourPickerVisible && <TwitterPicker triangle='hide' color={listColour} className='bottom-[8rem] z-20' onChange={(color:{hex:string}) => {setListColour(color.hex); setColourPickerVisible(false); document.getElementById('newTaskName')?.focus()}} />}
+                          {colourPickerVisible && <TwitterPicker triangle='hide' color={listColour} className='bottom-[8rem] z-20' onChange={(color:{hex:string}) => {setListColour(color.hex); setColourPickerVisible(false); document.getElementById('newListName')?.focus()}} />}
                           <div className='flex items-center gap-2 h-10 cursor-pointer'>
                               <div className='bg-slate-100 h-full w-20 rounded-md flex justify-evenly items-center' onClick={(e: React.MouseEvent<HTMLDivElement>) => toggleColourPicker(e)} >
                                   <div className='w-4 h-4 rounded' style={{backgroundColor: listColour}}></div>
                                   <ChevronDown className={`stroke-2 w-4 transition ${colourPickerVisible ? 'rotate-180' : ''}`} />
                               </div>
-                              <input type="text" id="newTaskName" placeholder="List name" className='bg-slate-100 px-4 py-2 rounded-md w-full'></input>
+                              <input type="text" id="newListName" placeholder="List name" className='bg-slate-100 px-4 py-2 rounded-md w-full'></input>
                           </div>
                         </div>
 
@@ -88,9 +88,9 @@ function AddList({ onSubmit }: AddListProps) {
                           className="inline-flex w-full justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
                           onClick={() => {
                             closeModal();
-                            const newTaskNameElement = document.getElementById('newTaskName') as HTMLInputElement;
-                            if (newTaskNameElement !== null) {
-                              onSubmit(newTaskNameElement.value, listColour);
+                            const newListNameElement = document.getElementById('newListName') as HTMLInputElement;
+                            if (newListNameElement !== null) {
+                              onSubmit(newListNameElement.value, listColour);
                             }
                           }}
                         >
