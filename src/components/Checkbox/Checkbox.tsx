@@ -21,7 +21,7 @@ function Checkbox({ isChecked, id, onChange }: CheckboxProps) {
           id={`${id}`}
           checked={isChecked}
           onChange={handleCheckboxChange}
-          className="opacity-0 absolute"
+          className="opacity-0 absolute cursor-pointer w-0 h-0"
         />
         <label
           htmlFor={`${id}`}

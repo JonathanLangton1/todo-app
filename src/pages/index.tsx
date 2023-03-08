@@ -8,11 +8,13 @@ import AddList from "~/components/AddList/AddList";
 import TaskItem from "~/components/TaskItem/TaskItem";
 import { Plus } from "react-feather";
 import AddTask from "~/components/AddTask/AddTask";
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 
 
 const Home: NextPage = () => {
 
+  const [animationParent] = useAutoAnimate()
   const [lists, setLists] = useState([{'id': 0, 'listName': 'Work', 'themeColour': 'pink'}, {'id': 1, 'listName': 'Personal', 'themeColour': 'lightblue'}])
   const [tasks, setTasks] = useState([
     {'id': 0, 'parentListId': 0, 'taskName': 'Test task', 'dueDate': new Date().toISOString(), 'priority': undefined, 'taskNote': '', 'isComplete': false },
@@ -101,7 +103,7 @@ const Home: NextPage = () => {
         <section className="mb-4 overflow-y-auto overflow-x-visible h-[calc(100svh-15.75rem)]">
           <div>
             <h3 className="text-xs font-medium py-2 sticky top-0 bg-slate-100 z-[2]">Today</h3>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2" ref={animationParent}>
               {tasks.map(task => {
                 if (task.dueDate.slice(0, -14) == new Date().toISOString().slice(0, -14)) {
                   const parentList = getParentListFromId(task.parentListId);
